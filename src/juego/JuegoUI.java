@@ -2,10 +2,14 @@ package juego;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
+
+
 
 
 public class JuegoUI extends Canvas implements Runnable, KeyListener {
@@ -55,8 +59,20 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		long lastTime = System.nanoTime();
+		final double ns = 1000000000.0 / DatosJuego.FPS;
+		double delta = 0;
+		//Se ejecuta 60 veces por segundo
+		while (running) {
+			long now = System.nanoTime();
+			delta += (now - lastTime) / ns;
+			lastTime = now;
+			if (delta >= 1) {
+				//Juego.getJuego().update();
+				pintar();
+				delta--;
+			}
+		}
 	}
 	
 	public synchronized void start() {
@@ -73,6 +89,18 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 			e.printStackTrace();
 		}
 	}
-
+	public void pintar() {
+		BufferStrategy bs = getBufferStrategy();
+		if (bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
+		Graphics g = bs.getDrawGraphics();
+		g.setColor(DatosJuego.COLOR_FONDO);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		Juego.getJuego().pintar(g);
+		g.dispose();
+		bs.show();
+	}
 
 }
