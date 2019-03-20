@@ -27,4 +27,16 @@ public class Serpiente {
 		return x.size();
 	}
 
+	public int[] borrarCola() {
+		int[] cola = new int[2];
+		cola[0]=x.remove(x.size()-1);
+		cola[1]=y.remove(y.size()-1);
+		return cola;	
+	}
+
+	public void añadirCabeza(int cabezaX, int cabezaY) {
+		x.add(cabezaX);
+		y.add(cabezaY);
+	}
+
 }

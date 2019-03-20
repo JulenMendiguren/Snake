@@ -19,6 +19,7 @@ public class Tablero {
 		crearTablero();
 		laSerpiente = new Serpiente();
 		asignarSerpiente();
+		generarManzana();
 		imprimirTablero();
 	}
 
@@ -98,4 +99,69 @@ public class Tablero {
 		return lasCasillas[x][y];
 	}
 
+	public boolean moverSerpiente(String sentido) {
+		// TODO Auto-generated method stub
+		boolean muerto = false;
+		boolean manzanaComida = false;
+		int[] cabeza = new int[2];
+		cabeza =laSerpiente.getCoordenadas(0);
+		int 	cabezaX 	= cabeza[0];
+		int	cabezaY	= cabeza[1];
+		int casillaNuevaX = 0;
+		int casillaNuevaY = 0;
+        if (sentido.equals("izquierda")) {
+        		if (cabezaX==0){
+        			muerto=true;
+        		}else {
+        		casillaNuevaX=cabezaX-1;
+        		casillaNuevaY=cabezaY;
+        		}
+        }
+        else if (sentido.equals("derecha"))  {
+        		if (cabezaX==DatosJuego.CASILLAS_ANCHO){
+        			muerto=true;
+        		}else {
+        			casillaNuevaX=cabezaX+1;
+        			casillaNuevaY=cabezaY;
+        		}
+        }
+        else if (sentido.equals("arriba"))  {
+        		if (cabezaY==0){
+        			muerto=true;
+        		}else {
+			casillaNuevaX=cabezaX;
+			casillaNuevaY=cabezaY-1;
+        		}
+        }
+
+        else if (sentido.equals("abajo"))  {
+	    		if (cabezaY==DatosJuego.CASILLAS_ALTO){
+	    			muerto=true;
+	    		}else {
+			casillaNuevaX=cabezaX;
+			casillaNuevaY=cabezaY+1;
+        }
+	    	if (!muerto) {
+	    		System.out.println("se mueve");
+			if (lasCasillas[casillaNuevaX][casillaNuevaY]!=3) {
+				int[] casillaBorrada = laSerpiente.borrarCola();
+				lasCasillas[casillaBorrada[0]][casillaBorrada[1]]=0;
+			}
+			else {
+				manzanaComida =true;
+			}
+			if (lasCasillas[casillaNuevaX][casillaNuevaY]!=2) {
+				muerto=true;
+			}else {
+				laSerpiente.añadirCabeza(casillaNuevaX,casillaNuevaY);
+			}
+			if (manzanaComida) {
+				generarManzana();
+			}
+	    	}
+	
+
+}
+        return muerto;
+	}
 }

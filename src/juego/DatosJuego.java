@@ -16,7 +16,7 @@ public class DatosJuego {
 	public static final int CASILLAS_ANCHO = PIXELES_ANCHO/LONGITUD_CASILLA;
 	
 	//Fps
-	public static final int FPS = 60;
+	public static final int FPS = 3;
 	
 	
 }

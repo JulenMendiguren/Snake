@@ -18,7 +18,7 @@ public class Juego {
 
 	public Juego() {
 		elTablero = new Tablero(DatosJuego.CASILLAS_ANCHO, DatosJuego.CASILLAS_ALTO);
-		elTablero.generarManzana();
+		//elTablero.generarManzana();
 	}
 
 	public static Juego getJuego() {
@@ -28,29 +28,22 @@ public class Juego {
 		return miJuego;
 	}
 	
-	/*private void mover() {
-
-        for (int z = dots; z > 0; z--) {
-            x[z] = x[(z - 1)];
-            y[z] = y[(z - 1)];
+	private void updateSerpiente() {
+		System.out.println("hola 1");
+        if (izquierda) {
+        		elTablero.moverSerpiente("izquierda");
         }
-
-        if (leftDirection) {
-            x[0] -= DOT_SIZE;
+        else if (derecha) {
+        		elTablero.moverSerpiente("derecha");	
         }
-
-        if (rightDirection) {
-            x[0] += DOT_SIZE;
+        else if (arriba) {
+        		elTablero.moverSerpiente("arriba");
         }
-
-        if (upDirection) {
-            y[0] -= DOT_SIZE;
+        else if (abajo) {
+        		elTablero.moverSerpiente("abajo");
         }
-
-        if (downDirection) {
-            y[0] += DOT_SIZE;
-        }
-    }*/
+        System.out.println("hola 2");
+    }
 	
 	public void keyPressed(KeyEvent e) {
 
@@ -83,6 +76,7 @@ public class Juego {
 
 	public void update() {
 		// Aqui se hacen todos los cambios de casillas, snake, manzanas...
+		updateSerpiente();
 	}
 
 	public void pintar(Graphics g) {

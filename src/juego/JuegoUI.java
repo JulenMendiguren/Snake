@@ -1,4 +1,4 @@
-package juego;
+	package juego;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -68,7 +68,7 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 			delta += (now - lastTime) / ns;
 			lastTime = now;
 			if (delta >= 1) {
-				//Juego.getJuego().update();
+				Juego.getJuego().update();
 				pintar();
 				delta--;
 			}
