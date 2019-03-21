@@ -12,8 +12,8 @@ public class Juego {
 	private static Juego miJuego;
 	private static Tablero elTablero;
 	private boolean izquierda = false;
-    private boolean derecha = true;
-    private boolean arriba = false;
+    private boolean derecha = false;
+    private boolean arriba = true;
     private boolean abajo = false;
 
 	public Juego() {
@@ -48,25 +48,25 @@ public class Juego {
 
         int tecla = e.getKeyCode();
 
-        if ((tecla == KeyEvent.VK_LEFT) && (!derecha)) {
+        if ((tecla == KeyEvent.VK_A) && (!derecha)) {
             izquierda = true;
             arriba = false;
             abajo = false;
         }
 
-        if ((tecla == KeyEvent.VK_RIGHT) && (!izquierda)) {
+        if ((tecla == KeyEvent.VK_D) && (!izquierda)) {
             derecha = true;
             arriba = false;
             abajo = false;
         }
 
-        if ((tecla == KeyEvent.VK_UP) && (!abajo)) {
+        if ((tecla == KeyEvent.VK_W) && (!abajo)) {
             arriba = true;
             derecha = false;
             izquierda = false;
         }
 
-        if ((tecla == KeyEvent.VK_DOWN) && (!arriba)) {
+        if ((tecla == KeyEvent.VK_S) && (!arriba)) {
             abajo = true;
             derecha = false;
             izquierda = false;

@@ -40,20 +40,21 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 	}
 	
 	@Override
-	public void keyPressed(KeyEvent arg0) {
+	public void keyPressed(KeyEvent evento) {
 		// TODO Auto-generated method stub
+		Juego.getJuego().keyPressed(evento);
 		
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyReleased(KeyEvent evento) {
+		Juego.getJuego().keyPressed(evento);
 		
 	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyTyped(KeyEvent evento) {
+		Juego.getJuego().keyPressed(evento);
 		
 	}
 
