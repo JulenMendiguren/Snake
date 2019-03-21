@@ -113,12 +113,11 @@ public class Tablero {
         		if (cabezaX==0){
         			muerto=true;
         		}else {
-        		casillaNuevaX=cabezaX-1;
-        		casillaNuevaY=cabezaY;
+        			casillaNuevaX=cabezaX-1;
+        			casillaNuevaY=cabezaY;
         		}
-        }
-        else if (sentido.equals("derecha"))  {
-        		if (cabezaX==DatosJuego.CASILLAS_ANCHO){
+        }else if (sentido.equals("derecha"))  {
+        		if (cabezaX==DatosJuego.CASILLAS_ANCHO-1){
         			muerto=true;
         		}else {
         			casillaNuevaX=cabezaX+1;
@@ -135,22 +134,24 @@ public class Tablero {
         }
 
         else if (sentido.equals("abajo"))  {
-	    		if (cabezaY==DatosJuego.CASILLAS_ALTO){
+	    		if (cabezaY==DatosJuego.CASILLAS_ALTO-1){
 	    			muerto=true;
 	    		}else {
 			casillaNuevaX=cabezaX;
 			casillaNuevaY=cabezaY+1;
         }
+        }
 	    	if (!muerto) {
-	    		System.out.println("se mueve");
 			if (lasCasillas[casillaNuevaX][casillaNuevaY]!=3) {
 				int[] casillaBorrada = laSerpiente.borrarCola();
 				lasCasillas[casillaBorrada[0]][casillaBorrada[1]]=0;
 			}
 			else {
+				lasCasillas[casillaNuevaX][casillaNuevaY]=0;
 				manzanaComida =true;
 			}
-			if (lasCasillas[casillaNuevaX][casillaNuevaY]!=2) {
+			
+			if (lasCasillas[casillaNuevaX][casillaNuevaY]==2) {
 				muerto=true;
 			}else {
 				laSerpiente.añadirCabeza(casillaNuevaX,casillaNuevaY);
@@ -159,9 +160,7 @@ public class Tablero {
 				generarManzana();
 			}
 	    	}
-	
-
-}
+	    	this.asignarSerpiente();
         return muerto;
 	}
 }

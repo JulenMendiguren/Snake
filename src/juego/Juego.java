@@ -29,7 +29,6 @@ public class Juego {
 	}
 	
 	private void updateSerpiente() {
-		System.out.println("hola 1");
         if (izquierda) {
         		elTablero.moverSerpiente("izquierda");
         }
@@ -42,7 +41,7 @@ public class Juego {
         else if (abajo) {
         		elTablero.moverSerpiente("abajo");
         }
-        System.out.println("hola 2");
+        
     }
 	
 	public void keyPressed(KeyEvent e) {

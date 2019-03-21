@@ -35,8 +35,16 @@ public class Serpiente {
 	}
 
 	public void añadirCabeza(int cabezaX, int cabezaY) {
-		x.add(cabezaX);
-		y.add(cabezaY);
+		x.add(0, cabezaX);
+		y.add(0, cabezaY);
+	}
+
+	public void printSerpiente() {
+		// TODO Auto-generated method stub
+		System.out.println("x aldagaia : ");
+		System.out.println(x.toString());
+		System.out.println("y aldagaia : ");
+		System.out.println(y.toString());
 	}
 
 }
