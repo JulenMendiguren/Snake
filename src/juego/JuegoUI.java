@@ -69,11 +69,12 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 			delta += (now - lastTime) / ns;
 			lastTime = now;
 			if (delta >= 1) {
-				Juego.getJuego().update();
+				running=!Juego.getJuego().update();
 				pintar();
 				delta--;
 			}
-		}
+			
+		}System.out.println("Me he muerto.");
 	}
 	
 	public synchronized void start() {

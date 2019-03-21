@@ -28,20 +28,21 @@ public class Juego {
 		return miJuego;
 	}
 	
-	private void updateSerpiente() {
+	private boolean updateSerpiente() {
+		boolean resultado=false;
         if (izquierda) {
-        		elTablero.moverSerpiente("izquierda");
+        		resultado=elTablero.moverSerpiente("izquierda");
         }
         else if (derecha) {
-        		elTablero.moverSerpiente("derecha");	
+        		resultado=elTablero.moverSerpiente("derecha");	
         }
         else if (arriba) {
-        		elTablero.moverSerpiente("arriba");
+        		resultado=elTablero.moverSerpiente("arriba");
         }
         else if (abajo) {
-        		elTablero.moverSerpiente("abajo");
+        		resultado=elTablero.moverSerpiente("abajo");
         }
-        
+        return resultado;
     }
 	
 	public void keyPressed(KeyEvent e) {
@@ -73,9 +74,10 @@ public class Juego {
         }
     }
 
-	public void update() {
-		// Aqui se hacen todos los cambios de casillas, snake, manzanas...
-		updateSerpiente();
+	public boolean update() {
+		boolean bukatuDa = false;
+		bukatuDa=updateSerpiente();
+		return bukatuDa;
 	}
 
 	public void pintar(Graphics g) {
