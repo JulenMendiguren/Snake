@@ -1,7 +1,9 @@
 	package juego;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -41,7 +43,6 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 	
 	@Override
 	public void keyPressed(KeyEvent evento) {
-		// TODO Auto-generated method stub
 		Juego.getJuego().keyPressed(evento);
 		
 	}
@@ -70,7 +71,7 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 			lastTime = now;
 			if (delta >= 1) {
 				running=!Juego.getJuego().update();
-				pintar();
+				pintarTablero();
 				delta--;
 			}
 			
@@ -91,7 +92,7 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 			e.printStackTrace();
 		}
 	}
-	public void pintar() {
+	public void pintarTablero() {
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
 			createBufferStrategy(3);
@@ -100,7 +101,33 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(DatosJuego.COLOR_FONDO);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		Juego.getJuego().pintar(g);
+		
+		g.setFont(new Font("Arial", Font.BOLD, 20));
+		g.setColor(DatosJuego.COLOR_FONDO);
+		g.setColor(Color.LIGHT_GRAY);
+		g.fillRect(0, 0, DatosJuego.PIXELES_ANCHO, DatosJuego.PIXELES_ALTO);
+		
+		Tablero tab =  Juego.getJuego().getTablero();
+		int[][] lasCasillas = tab.getCasillas();
+		
+		for (int i = 0; i < tab.getWidth(); i++) {
+			for (int j = 0; j < tab.getHeight(); j++) {
+				if (lasCasillas[i][j] == 1) {
+					g.setColor(Color.BLACK);
+					g.fillRect(i * DatosJuego.LONGITUD_CASILLA, j * DatosJuego.LONGITUD_CASILLA,
+							DatosJuego.LONGITUD_CASILLA, DatosJuego.LONGITUD_CASILLA);
+				} else if (lasCasillas[i][j] == 2) {
+					g.setColor(Color.GREEN);
+					g.fillRect(i * DatosJuego.LONGITUD_CASILLA, j * DatosJuego.LONGITUD_CASILLA,
+							DatosJuego.LONGITUD_CASILLA, DatosJuego.LONGITUD_CASILLA);
+				} else if (lasCasillas[i][j] == 3) {
+					g.setColor(Color.RED);
+					g.fillRect(i * DatosJuego.LONGITUD_CASILLA, j * DatosJuego.LONGITUD_CASILLA,
+							DatosJuego.LONGITUD_CASILLA, DatosJuego.LONGITUD_CASILLA);
+				}
+			}
+		}
+		
 		g.dispose();
 		bs.show();
 	}

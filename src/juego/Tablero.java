@@ -52,30 +52,7 @@ public class Tablero {
 		}
 	}
 
-	public void pintarTablero(Graphics g) {
-		g.setFont(new Font("Arial", Font.BOLD, 20));
-		g.setColor(DatosJuego.COLOR_FONDO);
-		g.setColor(Color.LIGHT_GRAY);
-		g.fillRect(0, 0, DatosJuego.PIXELES_ANCHO, DatosJuego.PIXELES_ALTO);
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				if (lasCasillas[i][j] == 1) {
-					g.setColor(Color.BLACK);
-					g.fillRect(i * DatosJuego.LONGITUD_CASILLA, j * DatosJuego.LONGITUD_CASILLA,
-							DatosJuego.LONGITUD_CASILLA, DatosJuego.LONGITUD_CASILLA);
-				} else if (lasCasillas[i][j] == 2) {
-					g.setColor(Color.GREEN);
-					g.fillRect(i * DatosJuego.LONGITUD_CASILLA, j * DatosJuego.LONGITUD_CASILLA,
-							DatosJuego.LONGITUD_CASILLA, DatosJuego.LONGITUD_CASILLA);
-				} else if (lasCasillas[i][j] == 3) {
-					g.setColor(Color.RED);
-					g.fillRect(i * DatosJuego.LONGITUD_CASILLA, j * DatosJuego.LONGITUD_CASILLA,
-							DatosJuego.LONGITUD_CASILLA, DatosJuego.LONGITUD_CASILLA);
-				}
-			}
-		}
-	}
-
+	
 	public void imprimirTablero() {
 		String tableroString = "";
 		for (int i = 0; i < width; i++) {
@@ -99,6 +76,10 @@ public class Tablero {
 		return lasCasillas[x][y];
 	}
 
+	public int[][] getCasillas() {
+		return lasCasillas;
+	}
+	
 	public boolean moverSerpiente(String sentido) {
 		// TODO Auto-generated method stub
 		boolean muerto = false;
@@ -154,7 +135,7 @@ public class Tablero {
 			if (lasCasillas[casillaNuevaX][casillaNuevaY]==2) {
 				muerto=true;
 			}else {
-				laSerpiente.añadirCabeza(casillaNuevaX,casillaNuevaY);
+				laSerpiente.anadirCabeza(casillaNuevaX,casillaNuevaY);
 			}
 			if (manzanaComida) {
 				generarManzana();

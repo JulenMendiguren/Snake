@@ -34,7 +34,7 @@ public class Serpiente {
 		return cola;	
 	}
 
-	public void añadirCabeza(int cabezaX, int cabezaY) {
+	public void anadirCabeza(int cabezaX, int cabezaY) {
 		x.add(0, cabezaX);
 		y.add(0, cabezaY);
 	}
