@@ -9,92 +9,92 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Juego {
 
-	private static Juego miJuego;
+	private static Juego elJuego;
 	private static Tablero elTablero;
 	private boolean izquierda = false;
-    private boolean derecha = false;
-    private boolean arriba = true;
-    private boolean abajo = false;
-    private String ultimaDireccion = "arriba";
+	private boolean derecha = false;
+	private boolean arriba = true;
+	private boolean abajo = false;
+	private String ultimaDireccion = "arriba";
 
 	public Juego() {
 		elTablero = new Tablero(DatosJuego.CASILLAS_ANCHO, DatosJuego.CASILLAS_ALTO);
 	}
 
 	public static Juego getJuego() {
-		if (miJuego == null) {
-			miJuego = new Juego();
+		if (elJuego == null) {
+			elJuego = new Juego();
 		}
-		return miJuego;
+		return elJuego;
 	}
-	
+
 	private boolean updateSerpiente() {
-		boolean resultado=false;
-        if (izquierda) {
-        		resultado=elTablero.moverSerpiente("izquierda");
-        }
-        else if (derecha) {
-        		resultado=elTablero.moverSerpiente("derecha");	
-        }
-        else if (arriba) {
-        		resultado=elTablero.moverSerpiente("arriba");
-        }
-        else if (abajo) {
-        		resultado=elTablero.moverSerpiente("abajo");
-        }
-        return resultado;
-    }
-	
+		boolean resultado = false;
+		if (izquierda) {
+			resultado = elTablero.moverSerpiente("izquierda");
+		} else if (derecha) {
+			resultado = elTablero.moverSerpiente("derecha");
+		} else if (arriba) {
+			resultado = elTablero.moverSerpiente("arriba");
+		} else if (abajo) {
+			resultado = elTablero.moverSerpiente("abajo");
+		}
+		return resultado;
+	}
+
 	public void keyPressed(KeyEvent e) {
 
-        int tecla = e.getKeyCode();
+		int tecla = e.getKeyCode();
 
-        if ((tecla == KeyEvent.VK_A) && (!derecha) && ultimaDireccion!="derecha") {
-            izquierda = true;
-            arriba = false;
-            abajo = false;
-        }
+		if ((tecla == KeyEvent.VK_A) && (!derecha) && ultimaDireccion != "derecha") {
+			izquierda = true;
+			arriba = false;
+			abajo = false;
+		}
 
-        if ((tecla == KeyEvent.VK_D) && (!izquierda)&& ultimaDireccion!="izquierda") {
-            derecha = true;
-            arriba = false;
-            abajo = false;
-        }
+		if ((tecla == KeyEvent.VK_D) && (!izquierda) && ultimaDireccion != "izquierda") {
+			derecha = true;
+			arriba = false;
+			abajo = false;
+		}
 
-        if ((tecla == KeyEvent.VK_W) && (!abajo) && ultimaDireccion!="abajo") {
-            arriba = true;
-            derecha = false;
-            izquierda = false;
-        }
+		if ((tecla == KeyEvent.VK_W) && (!abajo) && ultimaDireccion != "abajo") {
+			arriba = true;
+			derecha = false;
+			izquierda = false;
+		}
 
-        if ((tecla == KeyEvent.VK_S) && (!arriba) && ultimaDireccion!="arriba") {
-            abajo = true;
-            derecha = false;
-            izquierda = false;
-        }
-    }
+		if ((tecla == KeyEvent.VK_S) && (!arriba) && ultimaDireccion != "arriba") {
+			abajo = true;
+			derecha = false;
+			izquierda = false;
+		}
+	}
 
-	public boolean update() {		
+	public boolean update() {
 		boolean bukatuDa = false;
 		actualizarUltimaDireccion();
-		bukatuDa=updateSerpiente();
+		bukatuDa = updateSerpiente();
 		return bukatuDa;
 	}
-	
-	private void actualizarUltimaDireccion(){
-		if(izquierda){
+
+	private void actualizarUltimaDireccion() {
+		if (izquierda) {
 			ultimaDireccion = "izquierda";
-		}else if (derecha){
+		} else if (derecha) {
 			ultimaDireccion = "derecha";
-		}else if(arriba){
+		} else if (arriba) {
 			ultimaDireccion = "arriba";
-		}else if (abajo){
+		} else if (abajo) {
 			ultimaDireccion = "abajo";
 		}
 	}
 
-
-	public Tablero getTablero(){
+	public Tablero getTablero() {
 		return elTablero;
+	}
+
+	public void destruirJuego() {
+		elJuego = null;
 	}
 }

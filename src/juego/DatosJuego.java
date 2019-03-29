@@ -19,4 +19,19 @@ public class DatosJuego {
 	public static final int FPS = 10;
 	
 	
+	/*	VALORES DE CASILLAS
+	 * 
+	 * 0 = vacía
+	 * 
+	 * 1 = cabeza de la serpiente
+	 * 
+	 * 2 = cuerpo de la serpiente
+	 * 
+	 * 3 = manzana
+	 * 
+	 * 4 = manzana envenenada
+	 * 
+	 */
+	
+	
 }

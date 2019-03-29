@@ -52,7 +52,6 @@ public class Tablero {
 		}
 	}
 
-	
 	public void imprimirTablero() {
 		String tableroString = "";
 		for (int i = 0; i < width; i++) {
@@ -79,69 +78,67 @@ public class Tablero {
 	public int[][] getCasillas() {
 		return lasCasillas;
 	}
-	
+
 	public boolean moverSerpiente(String sentido) {
 		// TODO Auto-generated method stub
 		boolean muerto = false;
 		boolean manzanaComida = false;
 		int[] cabeza = new int[2];
-		cabeza =laSerpiente.getCoordenadas(0);
-		int 	cabezaX 	= cabeza[0];
-		int	cabezaY	= cabeza[1];
+		cabeza = laSerpiente.getCoordenadas(0);
+		int cabezaX = cabeza[0];
+		int cabezaY = cabeza[1];
 		int casillaNuevaX = 0;
 		int casillaNuevaY = 0;
-        if (sentido.equals("izquierda")) {
-        		if (cabezaX==0){
-        			muerto=true;
-        		}else {
-        			casillaNuevaX=cabezaX-1;
-        			casillaNuevaY=cabezaY;
-        		}
-        }else if (sentido.equals("derecha"))  {
-        		if (cabezaX==DatosJuego.CASILLAS_ANCHO-1){
-        			muerto=true;
-        		}else {
-        			casillaNuevaX=cabezaX+1;
-        			casillaNuevaY=cabezaY;
-        		}
-        }
-        else if (sentido.equals("arriba"))  {
-        		if (cabezaY==0){
-        			muerto=true;
-        		}else {
-			casillaNuevaX=cabezaX;
-			casillaNuevaY=cabezaY-1;
-        		}
-        }
+		if (sentido.equals("izquierda")) {
+			if (cabezaX == 0) {
+				muerto = true;
+			} else {
+				casillaNuevaX = cabezaX - 1;
+				casillaNuevaY = cabezaY;
+			}
+		} else if (sentido.equals("derecha")) {
+			if (cabezaX == DatosJuego.CASILLAS_ANCHO - 1) {
+				muerto = true;
+			} else {
+				casillaNuevaX = cabezaX + 1;
+				casillaNuevaY = cabezaY;
+			}
+		} else if (sentido.equals("arriba")) {
+			if (cabezaY == 0) {
+				muerto = true;
+			} else {
+				casillaNuevaX = cabezaX;
+				casillaNuevaY = cabezaY - 1;
+			}
+		}
 
-        else if (sentido.equals("abajo"))  {
-	    		if (cabezaY==DatosJuego.CASILLAS_ALTO-1){
-	    			muerto=true;
-	    		}else {
-			casillaNuevaX=cabezaX;
-			casillaNuevaY=cabezaY+1;
-        }
-        }
-	    	if (!muerto) {
-			if (lasCasillas[casillaNuevaX][casillaNuevaY]!=3) {
+		else if (sentido.equals("abajo")) {
+			if (cabezaY == DatosJuego.CASILLAS_ALTO - 1) {
+				muerto = true;
+			} else {
+				casillaNuevaX = cabezaX;
+				casillaNuevaY = cabezaY + 1;
+			}
+		}
+		if (!muerto) {
+			if (lasCasillas[casillaNuevaX][casillaNuevaY] != 3) {
 				int[] casillaBorrada = laSerpiente.borrarCola();
-				lasCasillas[casillaBorrada[0]][casillaBorrada[1]]=0;
+				lasCasillas[casillaBorrada[0]][casillaBorrada[1]] = 0;
+			} else {
+				lasCasillas[casillaNuevaX][casillaNuevaY] = 0;
+				manzanaComida = true;
 			}
-			else {
-				lasCasillas[casillaNuevaX][casillaNuevaY]=0;
-				manzanaComida =true;
-			}
-			
-			if (lasCasillas[casillaNuevaX][casillaNuevaY]==2) {
-				muerto=true;
-			}else {
-				laSerpiente.anadirCabeza(casillaNuevaX,casillaNuevaY);
+
+			if (lasCasillas[casillaNuevaX][casillaNuevaY] == 2) {
+				muerto = true;
+			} else {
+				laSerpiente.anadirCabeza(casillaNuevaX, casillaNuevaY);
 			}
 			if (manzanaComida) {
 				generarManzana();
 			}
-	    	}
-	    	this.asignarSerpiente();
-        return muerto;
+		}
+		this.asignarSerpiente();
+		return muerto;
 	}
 }
