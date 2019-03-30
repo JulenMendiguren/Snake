@@ -16,7 +16,10 @@ public class DatosJuego {
 	public static final int CASILLAS_ANCHO = PIXELES_ANCHO/LONGITUD_CASILLA;
 	
 	//Fps
-	public static final int FPS = 10;
+	public static int FPS = 8;
+	
+	//
+	public static int TIEMPO_RELOJ = 20;
 	
 	
 	/*	VALORES DE CASILLAS
@@ -31,7 +34,13 @@ public class DatosJuego {
 	 * 
 	 * 4 = manzana envenenada
 	 * 
+	 * 5 = Pared
+	 * 
 	 */
+	
+	public static void setFPS(int fps){
+		FPS = fps;
+	}
 	
 	
 }

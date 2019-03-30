@@ -7,12 +7,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 import juego.DatosJuego;
 import juego.Juego;
 import juego.Tablero;
@@ -33,13 +30,38 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 		setFocusable(true);
 		requestFocus();
 		setSkin(skinIndex);
+		setModificadores(modificadores);
 		empezarJuego();
+		
+//		System.out.println("Constructora JuegoUI");
+//		System.out.println("Manzanas Env: " + modificadores[0]);
+//		System.out.println("Rápido: " + modificadores[1]);
+//		System.out.println("Paredes: " + modificadores[2]);
+//		System.out.println("Contrarreloj: " + modificadores[3]);
+//		System.out.println("");
+	}
+
+	private void setModificadores(boolean[] modificadores) {
+		// Manzanas envenenadas
+		Juego.getJuego().setModoManzanaEnvenenada(modificadores[0]);
+		// Más rápido
+		if (modificadores[1]) {
+			DatosJuego.setFPS(16);
+		} else {
+			DatosJuego.setFPS(8);
+		}
+		// Paredes
+		Juego.getJuego().setModoParedes(modificadores[2]);
+
+		// Contrarreloj
+		Juego.getJuego().setModoContrarReloj(modificadores[3]);
+
 	}
 
 	private void setSkin(int skinIndex) {
 		switch (skinIndex) {
 		case 0:
-			colCabeza = Color.BLACK;
+			colCabeza = new Color(146, 247, 0);
 			colCuerpo = Color.GREEN;
 			break;
 		case 1:
@@ -100,14 +122,13 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 			delta += (now - lastTime) / ns;
 			lastTime = now;
 			if (delta >= 1) {
-				running = !Juego.getJuego().update();
+				running = !Juego.getJuego().update(delta / DatosJuego.FPS);
 				pintarTablero();
 				delta--;
 			}
 
 		}
 		alertaGameOver();
-		System.out.println("Me he muerto.");
 	}
 
 	private void alertaGameOver() {
@@ -119,6 +140,7 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 			MenuPrincipal.main(null);
 			Juego.getJuego().destruirJuego();
 		}
+
 		setVisible(false);
 		frame.dispose();
 	}
@@ -127,15 +149,6 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 		thread = new Thread(this);
 		thread.start();
 		addKeyListener(this);
-	}
-
-	public synchronized static void stop() {
-		running = false;
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void pintarTablero() {
@@ -148,7 +161,6 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 		g.setColor(DatosJuego.COLOR_FONDO);
 		g.fillRect(0, 0, getWidth(), getHeight());
 
-		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.setColor(DatosJuego.COLOR_FONDO);
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(0, 0, DatosJuego.PIXELES_ANCHO, DatosJuego.PIXELES_ALTO);
@@ -168,10 +180,27 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 				} else if (lasCasillas[i][j] == 3) {
 					g.setColor(Color.RED);
 					g.fillRect(i * lon, j * lon, lon, lon);
+				} else if (lasCasillas[i][j] == 4) {
+					g.setColor(new Color(113, 0, 133)); // Morado
+					g.fillRect(i * lon, j * lon, lon, lon);
+				} else if (lasCasillas[i][j] == 5) {
+					g.setColor(Color.BLACK);
+					g.fillRect(i * lon, j * lon, lon, lon);
 				}
 			}
 		}
-
+		if (Juego.getJuego().getModoContrarReloj()) {
+			double reloj = Juego.getJuego().getReloj();
+			g.setFont(new Font("Arial", Font.BOLD, 16));
+			
+			if(reloj > 5){
+				g.setColor(Color.BLACK);
+			}else{
+				g.setColor(Color.RED);
+			}
+		
+			g.drawString(String.format("%.2f", reloj), DatosJuego.PIXELES_ANCHO / 2 - 20, 20);
+		}
 		g.dispose();
 		bs.show();
 	}

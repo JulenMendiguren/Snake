@@ -1,8 +1,5 @@
 package juego;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Tablero {
@@ -20,7 +17,7 @@ public class Tablero {
 		laSerpiente = new Serpiente();
 		asignarSerpiente();
 		generarManzana();
-		imprimirTablero();
+		// imprimirTablero();
 	}
 
 	private void crearTablero() {
@@ -52,6 +49,17 @@ public class Tablero {
 		}
 	}
 
+	public void generarManzanaEnvenenada() {
+		int x = ThreadLocalRandom.current().nextInt(0, DatosJuego.CASILLAS_ANCHO);
+		int y = ThreadLocalRandom.current().nextInt(0, DatosJuego.CASILLAS_ALTO);
+
+		if (lasCasillas[x][y] == 0) {
+			lasCasillas[x][y] = 4;
+		} else {
+			generarManzanaEnvenenada();
+		}
+	}
+
 	public void imprimirTablero() {
 		String tableroString = "";
 		for (int i = 0; i < width; i++) {
@@ -71,8 +79,16 @@ public class Tablero {
 		return height;
 	}
 
+	public int getLongitudSeripente() {
+		return laSerpiente.getLongitud();
+	}
+
 	public int getCasilla(int x, int y) {
 		return lasCasillas[x][y];
+	}
+
+	public void setCasilla(int x, int y, int valor) {
+		lasCasillas[x][y] = valor;
 	}
 
 	public int[][] getCasillas() {
@@ -80,15 +96,16 @@ public class Tablero {
 	}
 
 	public boolean moverSerpiente(String sentido) {
-		// TODO Auto-generated method stub
 		boolean muerto = false;
 		boolean manzanaComida = false;
+
 		int[] cabeza = new int[2];
 		cabeza = laSerpiente.getCoordenadas(0);
 		int cabezaX = cabeza[0];
 		int cabezaY = cabeza[1];
 		int casillaNuevaX = 0;
 		int casillaNuevaY = 0;
+
 		if (sentido.equals("izquierda")) {
 			if (cabezaX == 0) {
 				muerto = true;
@@ -120,9 +137,20 @@ public class Tablero {
 				casillaNuevaY = cabezaY + 1;
 			}
 		}
+
+		if (lasCasillas[casillaNuevaX][casillaNuevaY] == 5) {
+			muerto = true;
+		}
+
 		if (!muerto) {
+			if (lasCasillas[casillaNuevaX][casillaNuevaY] == 4) {
+				lasCasillas[casillaNuevaX][casillaNuevaY] = 0;
+				muerto = borrarCola();
+			}
+
 			if (lasCasillas[casillaNuevaX][casillaNuevaY] != 3) {
 				int[] casillaBorrada = laSerpiente.borrarCola();
+
 				lasCasillas[casillaBorrada[0]][casillaBorrada[1]] = 0;
 			} else {
 				lasCasillas[casillaNuevaX][casillaNuevaY] = 0;
@@ -141,4 +169,18 @@ public class Tablero {
 		this.asignarSerpiente();
 		return muerto;
 	}
+
+	public boolean borrarCola() {
+		
+		if (getLongitudSeripente() != 1) {
+			int[] casillaBorrada = laSerpiente.borrarCola();
+
+			lasCasillas[casillaBorrada[0]][casillaBorrada[1]] = 0;
+			return false;
+
+		} else {
+			return true;
+		}
+	}
+
 }

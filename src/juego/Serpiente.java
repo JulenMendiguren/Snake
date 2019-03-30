@@ -1,7 +1,5 @@
 package juego;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class Serpiente {
@@ -29,9 +27,11 @@ public class Serpiente {
 
 	public int[] borrarCola() {
 		int[] cola = new int[2];
-		cola[0]=x.remove(x.size()-1);
-		cola[1]=y.remove(y.size()-1);
-		return cola;	
+
+		cola[0] = x.remove(x.size() - 1);
+		cola[1] = y.remove(y.size() - 1);
+		return cola;
+
 	}
 
 	public void anadirCabeza(int cabezaX, int cabezaY) {
@@ -40,7 +40,7 @@ public class Serpiente {
 	}
 
 	public void printSerpiente() {
-		// TODO Auto-generated method stub
+		
 		System.out.println("x aldagaia : ");
 		System.out.println(x.toString());
 		System.out.println("y aldagaia : ");

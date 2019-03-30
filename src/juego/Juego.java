@@ -1,10 +1,6 @@
 package juego;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Juego {
@@ -16,6 +12,9 @@ public class Juego {
 	private boolean arriba = true;
 	private boolean abajo = false;
 	private String ultimaDireccion = "arriba";
+	private boolean modoManzanaEnvenenada = false;
+	private boolean modoContrarReloj = false;
+	private double reloj = DatosJuego.TIEMPO_RELOJ;
 
 	public Juego() {
 		elTablero = new Tablero(DatosJuego.CASILLAS_ANCHO, DatosJuego.CASILLAS_ALTO);
@@ -71,11 +70,33 @@ public class Juego {
 		}
 	}
 
-	public boolean update() {
-		boolean bukatuDa = false;
+	public boolean update(double deltaTime) {
+		boolean terminado = false;
+		if (modoContrarReloj) {
+			reloj -= deltaTime;
+			if (reloj < 0) {
+				reloj = DatosJuego.TIEMPO_RELOJ;
+				if (elTablero.borrarCola()) {
+					return true;
+				}
+
+			}
+		}
+
 		actualizarUltimaDireccion();
-		bukatuDa = updateSerpiente();
-		return bukatuDa;
+
+		if (modoManzanaEnvenenada)
+
+		{
+			int randomNum = ThreadLocalRandom.current().nextInt(0, 80);
+			if (randomNum == 7) {
+				elTablero.generarManzanaEnvenenada();
+			}
+		}
+
+		terminado = updateSerpiente();
+		return terminado;
+
 	}
 
 	private void actualizarUltimaDireccion() {
@@ -96,5 +117,45 @@ public class Juego {
 
 	public void destruirJuego() {
 		elJuego = null;
+	}
+
+	public void setModoManzanaEnvenenada(boolean activado) {
+		modoManzanaEnvenenada = activado;
+	}
+
+	public void setModoContrarReloj(boolean activado) {
+		modoContrarReloj = activado;
+	}
+
+	public boolean getModoContrarReloj() {
+		return modoContrarReloj;
+	}
+
+	public void setModoParedes(boolean activado) {
+		if (activado) {
+			for (int x = 0; x < elTablero.getWidth(); x++) {
+				for (int y = 0; y < elTablero.getHeight(); y++) {
+
+					// Horizontales
+					if (x > 4 && x < 10 || x > 20 && x < 26) {
+						if (y == 5 || y == 25) {
+							elTablero.setCasilla(x, y, 5);
+						}
+					}
+
+					// Verticales
+					if (y > 5 && y < 10 || y > 20 && y < 25) {
+						if (x == 5 || x == 25) {
+							elTablero.setCasilla(x, y, 5);
+						}
+					}
+
+				}
+			}
+		}
+	}
+
+	public double getReloj() {
+		return reloj;
 	}
 }

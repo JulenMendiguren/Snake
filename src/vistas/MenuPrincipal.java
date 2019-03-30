@@ -1,6 +1,6 @@
 package vistas;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -41,8 +41,6 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	private static void abrirMenuPrincipal() {
-		System.out.println("MAIN");
-
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -144,7 +142,7 @@ public class MenuPrincipal extends JFrame {
 
 	private JRadioButton getRdbtnRapido() {
 		if (rdbtnRapido == null) {
-			rdbtnRapido = new JRadioButton("M\u00E1s r\u00E1pido");
+			rdbtnRapido = new JRadioButton("Velocidad x2");
 			rdbtnRapido.setBounds(17, 104, 191, 23);
 		}
 		return rdbtnRapido;
