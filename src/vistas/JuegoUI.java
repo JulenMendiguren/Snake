@@ -132,8 +132,8 @@ public class JuegoUI extends Canvas implements Runnable, KeyListener {
 	}
 
 	private void alertaGameOver() {
-		Object[] options = { "Menu principal", "Cerrar" };
-		int n = JOptionPane.showOptionDialog(frame, "Te has muerto", "Game Over", JOptionPane.DEFAULT_OPTION,
+		Object[] options = { "Menú principal", "Cerrar" };
+		int n = JOptionPane.showOptionDialog(frame, "Has perdido.", "Fin de la partida", JOptionPane.DEFAULT_OPTION,
 				JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 
 		if (n == 0) {
